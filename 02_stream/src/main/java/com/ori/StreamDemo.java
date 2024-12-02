@@ -2,6 +2,7 @@ package com.ori;
 
 import java.util.*;
 import java.util.function.Consumer;
+import java.util.function.Function;
 import java.util.stream.Stream;
 
 public class StreamDemo {
@@ -10,7 +11,45 @@ public class StreamDemo {
         List<Author> authors = getAuthors();
 //        test1(authors);
 //        test2();
-        test3();
+//        test3();
+//        test4();
+//        test5();
+//        test6();
+        test7();
+    }
+
+    private static void test7() {
+        List<Author> authors = getAuthors();
+        authors.stream()
+                .distinct()
+                .sorted((o1, o2) -> o2.getAge() - o1.getAge())
+                .forEach(author -> System.out.println(author.getAge()));
+    }
+
+    private static void test6() {
+        List<Author> authors = getAuthors();
+        authors.stream()
+                .distinct()
+                .forEach(author -> System.out.println(author.getName()));
+    }
+
+    private static void test5() {
+        List<Author> authors = getAuthors();
+        /*//打印所有作家的姓名
+        authors.stream()
+                .map(author -> author.getName())
+                .forEach(s ->System.out.println(s));*/
+        authors.stream()
+                .map(author -> author.getAge())
+                .map(age -> age + 10)
+                .forEach(age -> System.out.println(age));
+    }
+
+    private static void test4() {
+        List<Author> authors = getAuthors();
+        authors.stream()
+                .filter(author -> author.getName().length() > 1)
+                .forEach(author -> System.out.println(author.getName()));
     }
 
     private static void test3() {
