@@ -15,7 +15,78 @@ public class StreamDemo {
 //        test4();
 //        test5();
 //        test6();
-        test7();
+//        test7();
+//        test8();
+//        test9();
+//        test10();
+//        test11();
+//        test12();
+//        test13();
+        test14();
+    }
+
+    private static void test14() {
+        List<Author> authors = getAuthors();
+        Optional<Integer> max = authors.stream()
+                .flatMap(author -> author.getBooks().stream())
+                .map(Book::getScore)
+                .max((o1, o2) -> o2 - o1);
+        System.out.println(max.get());
+
+    }
+
+    private static void test13() {
+        List<Author> authors = getAuthors();
+        long count = authors.stream()
+                .flatMap(author -> author.getBooks().stream())
+                .distinct()
+                .count();
+        System.out.println(count);
+    }
+
+    private static void test12() {
+        List<Author> authors = getAuthors();
+        authors.stream()
+                .map(Author::getName)
+                .distinct()
+                .forEach(System.out::println);
+    }
+
+    private static void test11() {
+        List<Author> authors = getAuthors();
+        authors.stream()
+                .flatMap(author -> author.getBooks().stream())
+                .distinct()
+                .flatMap(book -> Arrays.stream(book.getCategory().split(",")))
+                .distinct()
+                .forEach(System.out::println);
+    }
+
+    private static void test10() {
+        List<Author> authors = getAuthors();
+        authors.stream()
+                .flatMap(author -> author.getBooks().stream())
+                .distinct()
+                .forEach(book -> System.out.println(book.getName()));
+    }
+
+    private static void test9() {
+        List<Author> authors = getAuthors();
+        authors.stream()
+                .distinct()
+                .sorted()
+                .skip(1)
+                .forEach(author -> System.out.println(author.getName()));
+    }
+
+    private static void test8() {
+        List<Author> authors = getAuthors();
+        authors.stream()
+                .distinct()
+                .sorted()
+                .limit(2)
+                .forEach(author -> System.out.println(author.getName()));
+
     }
 
     private static void test7() {
