@@ -3,6 +3,7 @@ package com.ori;
 import java.util.*;
 import java.util.function.Consumer;
 import java.util.function.Function;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class StreamDemo {
@@ -22,7 +23,44 @@ public class StreamDemo {
 //        test11();
 //        test12();
 //        test13();
-        test14();
+//        test14();
+//        test15();
+//        test16();
+//        test17();
+        test18();
+    }
+
+    private static void test18() {
+        //判断是否有年龄在29岁以上的作家
+        List<Author> authors = getAuthors();
+        boolean b = authors.stream()
+                .anyMatch(author -> author.getAge() > 29);
+        System.out.println(b);
+    }
+
+    private static void test17() {
+        List<Author> authors = getAuthors();
+        Map<String, List<Book>> map = authors.stream()
+                .distinct()
+                .collect(Collectors.toMap(Author::getName, Author::getBooks));
+        System.out.println(map);
+    }
+
+    private static void test16() {
+        List<Author> authors = getAuthors();
+        authors.stream()
+                .flatMap(author -> author.getBooks().stream())
+                .collect(Collectors.toSet())
+                .forEach(System.out::println);
+    }
+
+    private static void test15() {
+        List<Author> authors = getAuthors();
+        List<String> nameList = authors.stream()
+                .map(Author::getName)
+                .collect(Collectors.toList());
+        System.out.println(nameList);
+
     }
 
     private static void test14() {
