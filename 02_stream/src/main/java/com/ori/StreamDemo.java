@@ -2,7 +2,6 @@ package com.ori;
 
 import java.util.*;
 import java.util.function.Consumer;
-import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -27,7 +26,84 @@ public class StreamDemo {
 //        test15();
 //        test16();
 //        test17();
-        test18();
+//        test18();
+//        test19();
+//        test20();
+//        test21();
+//        test22();
+//        test23();
+//        test24();
+//        test25();
+        test26();
+    }
+
+    private static void test26() {
+        //求所有作家中年龄的最小值
+        List<Author> authors = getAuthors();
+        Optional<Integer> minOptional = authors.stream()
+                .map(Author::getAge)
+                .reduce((a, b) -> a > b ? b : a);
+        minOptional.ifPresent(System.out::println);
+    }
+
+    private static void test25() {
+        //求所有作家中年龄的最小值
+        List<Author> authors = getAuthors();
+        Integer min = authors.stream()
+                .map(Author::getAge)
+                .reduce(Integer.MAX_VALUE, (a, b) -> a < b ? a : b);
+        System.out.println(min);
+    }
+
+    private static void test24() {
+        //求所有作家中年龄的最大值
+        List<Author> authors = getAuthors();
+        Integer max = authors.stream()
+                .map(Author::getAge)
+                .reduce(Integer.MIN_VALUE, (a, b) -> a < b ? b : a);
+        System.out.println(max);
+    }
+
+    private static void test23() {
+        //求所有作家年龄的和
+        List<Author> authors = getAuthors();
+        Integer sum = authors.stream()
+                .distinct()
+                .map(Author::getAge)
+                .reduce(0, (a, b) -> a + b);
+        System.out.println(sum);
+    }
+
+    private static void test22() {
+        //找到一个年龄最小的作家并输出他的名字
+        List<Author> authors = getAuthors();
+        Optional<Author> optional = authors.stream()
+                .sorted((o1, o2) -> o1.getAge() - o2.getAge())
+                .findFirst();
+        optional.ifPresent(author -> System.out.println(author.getName()));
+    }
+
+    private static void test21() {
+        //找到任意一个年龄大于18的作家并输出他的名字
+        List<Author> authors = getAuthors();
+        Optional<Author> optional = authors.stream()
+                .filter(author -> author.getAge() > 18)
+                .findAny();
+        optional.ifPresent(author -> System.out.println(author.getName()));
+    }
+
+    private static void test20() {
+        //判断是否作家都没超过100岁
+        List<Author> authors = getAuthors();
+        System.out.println(authors.stream()
+                .noneMatch(author -> author.getAge() >= 100));
+    }
+
+    private static void test19() {
+        //判断是否作家都是成年人
+        List<Author> authors = getAuthors();
+        System.out.println(authors.stream()
+                .allMatch(author -> author.getAge() > 18));
     }
 
     private static void test18() {
